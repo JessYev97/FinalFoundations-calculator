@@ -23,17 +23,19 @@ const operate = function(firstValue, secondValue, operator) {
   if (operator == "+") {
      return addNums(firstValue, secondValue);
 
-  } else if ( operator == "-") {
+  } else if ( operator == "-") {54
     return subtractNums(firstValue, secondValue);
 
   } else if (operator == "*") {
     return multiplyNums(firstValue, secondValue); 
 
   } else if (operator == "/") {
+    if (firstValue === 0 || secondValue === 0) {
+      return "no shot"
+    } else {
      return divideNums(firstValue, secondValue);
-  } else if (operator == "/" && firstValue == "0" || secondValue == "0") {
-    return "000"; 
-  }
+    }
+  } 
 }
 
 function populateDisplay(value) {
@@ -41,21 +43,20 @@ function populateDisplay(value) {
 }
 
 function handleNumber(num) {
+
   if (operator === '') {
     firstValue += num; 
     populateDisplay(firstValue);
   } else {
     secondValue += num;
     populateDisplay(secondValue);
-  }
-  
+  } 
 }
 
 function handleOperator(op) {
   if (firstValue !== '') {
     operator = op;
-  }
-}
+    populateDisplay(firstValue + '' + operator + '');  }}
 
 function updateCalculation(selection) {
   displayValue.textContent += selection;
