@@ -1,24 +1,86 @@
-let firstValue = Number();
-let secondValue = Number();
+let firstValue = '';
+let secondValue = '';
+let operator = '';
+const displayValue = document.querySelector('#display');
+
 const addNums = function(firstValue, secondValue) {
-  let result = firstValue + secondValue;
-  console.log(result); 
+  return firstValue + secondValue;
 }
 const subtractNums = function(firstValue, secondValue) {
-  let result = firstValue - secondValue;
-  console.log(result); 
+  return firstValue - secondValue;
 }
 const multiplyNums = function(firstValue, secondValue) {
-  let result = firstValue * secondValue;
-  console.log(result); 
+  return firstValue * secondValue;
 }
 const divideNums = function(firstValue, secondValue) {
-  let result = firstValue / secondValue;
-  //return result;
-  console.log(result); 
+  return firstValue / secondValue; 
 }
-subtractNums(10, 5);
-addNums(10, 5);
-multiplyNums(10, 5);
-divideNums(10, 5);
-// I'm going to try to condense this repeated code into one function with if statements
+
+
+const operate = function(firstValue, secondValue, operator) {
+  firstValue = parseFloat(firstValue);
+  secondValue = parseFloat(secondValue); 
+  if (operator == "+") {
+     return addNums(firstValue, secondValue);
+
+  } else if ( operator == "-") {
+    return subtractNums(firstValue, secondValue);
+
+  } else if (operator == "*") {
+    return multiplyNums(firstValue, secondValue); 
+
+  } else if (operator == "/") {
+     return divideNums(firstValue, secondValue);
+  } else if (operator == "/" && firstValue == "0" || secondValue == "0") {
+    return "000"; 
+  }
+}
+
+function populateDisplay(value) {
+  displayValue.textContent = value;
+}
+
+function handleNumber(num) {
+  if (operator === '') {
+    firstValue += num; 
+    populateDisplay(firstValue);
+  } else {
+    secondValue += num;
+    populateDisplay(secondValue);
+  }
+  
+}
+
+function handleOperator(op) {
+  if (firstValue !== '') {
+    operator = op;
+  }
+}
+
+function updateCalculation(selection) {
+  displayValue.textContent += selection;
+} 
+  document.querySelectorAll(".button").forEach(button => {
+    button.addEventListener("click", (e) => {
+      const value = e.target.getAttribute('data-value');
+      if (e.target.classList.contains('number')) {
+        handleNumber(value);
+      } else if (e.target.classList.contains('operator')) {
+        handleOperator(value);
+      } else if (e.target.classList.contains('equals')) {
+        const result = operate(parseFloat(firstValue), parseFloat(secondValue), operator);
+        populateDisplay(result);
+        firstValue = result;
+        secondValue = '';
+        operator = ''; 
+      } else if (e.target.classList.contains("clear")) {
+        firstValue = '';
+        secondValue = '';
+        operator = ''; 
+        populateDisplay(''); 
+      }
+    })
+  console.log(display);
+  }) 
+  
+
